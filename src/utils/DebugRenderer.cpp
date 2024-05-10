@@ -154,14 +154,14 @@ void DebugRenderer::drawSphere(const Vector3& position, decimal radius, uint32 c
     for (uint32 i = 0; i <= NB_STACKS_SPHERE; i++) {
 
         const decimal stackAngle = PI_RP3D / 2 - i * stackStep;
-		const decimal radiusCosStackAngle = radius * std::cos(stackAngle);
-		const decimal z = radius * std::sin(stackAngle);
+		const decimal radiusCosStackAngle = radius * rp3dCos(stackAngle);
+		const decimal z = radius * rp3dSin(stackAngle);
 
         for (uint32 j = 0; j <= NB_SECTORS_SPHERE; j++) {
 		
 			const decimal sectorAngle = j * sectorStep;
-			const decimal x = radiusCosStackAngle * std::cos(sectorAngle);
-			const decimal y = radiusCosStackAngle * std::sin(sectorAngle);
+			const decimal x = radiusCosStackAngle * rp3dCos(sectorAngle);
+			const decimal y = radiusCosStackAngle * rp3dSin(sectorAngle);
 
             vertices[i * (NB_SECTORS_SPHERE + 1) + j] = position + Vector3(x, y, z);
 		}
@@ -211,14 +211,14 @@ void DebugRenderer::drawCapsule(const Transform& transform, decimal radius, deci
     for (uint32 i = 0; i <= nbHalfStacks; i++) {
 
         const decimal stackAngle = PI_RP3D / 2 - i * stackStep;
-		const decimal radiusCosStackAngle = radius * std::cos(stackAngle);
-        const decimal y = radius * std::sin(stackAngle);
+		const decimal radiusCosStackAngle = radius * rp3dCos(stackAngle);
+        const decimal y = radius * rp3dSin(stackAngle);
 
         for (uint32 j = 0; j <= NB_SECTORS_SPHERE; j++) {
 		
 			const decimal sectorAngle = j * sectorStep;
-            const decimal x = radiusCosStackAngle * std::sin(sectorAngle);
-            const decimal z = radiusCosStackAngle * std::cos(sectorAngle);
+            const decimal x = radiusCosStackAngle * rp3dSin(sectorAngle);
+            const decimal z = radiusCosStackAngle * rp3dCos(sectorAngle);
 
             assert(vertexIndex < (NB_SECTORS_SPHERE + 1) * (nbStacks + 1) + (NB_SECTORS_SPHERE + 1));
 			vertices[vertexIndex] = transform * Vector3(x, y + halfHeight, z);
@@ -231,14 +231,14 @@ void DebugRenderer::drawCapsule(const Transform& transform, decimal radius, deci
     for (uint32 i = 0; i <= nbHalfStacks; i++) {
 
         const decimal stackAngle = PI_RP3D / 2 - (nbHalfStacks + i) * stackStep;
-		const decimal radiusCosStackAngle = radius * std::cos(stackAngle);
-        const decimal y = radius * std::sin(stackAngle);
+		const decimal radiusCosStackAngle = radius * rp3dCos(stackAngle);
+        const decimal y = radius * rp3dSin(stackAngle);
 
         for (uint32 j = 0; j <= NB_SECTORS_SPHERE; j++) {
 		
 			const decimal sectorAngle = j * sectorStep;
-            const decimal x = radiusCosStackAngle * std::sin(sectorAngle);
-            const decimal z = radiusCosStackAngle * std::cos(sectorAngle);
+            const decimal x = radiusCosStackAngle * rp3dSin(sectorAngle);
+            const decimal z = radiusCosStackAngle * rp3dCos(sectorAngle);
 
             assert(vertexIndex < (NB_SECTORS_SPHERE + 1) * (nbStacks + 1) + (NB_SECTORS_SPHERE + 1));
             vertices[vertexIndex] = transform * Vector3(x, y - halfHeight, z);

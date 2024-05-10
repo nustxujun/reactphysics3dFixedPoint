@@ -260,5 +260,5 @@ void ConvexMesh::computeVolume() {
         sum += faceVertex.dot(faceNormal) * faceArea;
     }
 
-    mVolume = std::abs(sum) / decimal(3.0);
+    mVolume = rp3dAbs(sum) / decimal(3.0);
 }

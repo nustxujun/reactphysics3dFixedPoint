@@ -64,7 +64,7 @@ bool SphereVsSphereAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInf
         // If the sphere collision shapes intersect
         if (squaredDistanceBetweenCenters < sumRadiusesProducts) {
 
-            const decimal penetrationDepth = sumRadiuses - std::sqrt(squaredDistanceBetweenCenters);
+            const decimal penetrationDepth = sumRadiuses - rp3dSqrt(squaredDistanceBetweenCenters);
 
             // Make sure the penetration depth is not zero (even if the previous condition test was true the penetration depth can still be
             // zero because of precision issue of the computation at the previous line)

@@ -175,7 +175,7 @@ RP3D_FORCE_INLINE void Vector2::setAllValues(decimal newX, decimal newY) {
 
 // Return the length of the vector
 RP3D_FORCE_INLINE decimal Vector2::length() const {
-    return std::sqrt(x*x + y*y);
+    return rp3dSqrt(x*x + y*y);
 }
 
 // Return the square of the length of the vector
@@ -200,7 +200,7 @@ RP3D_FORCE_INLINE void Vector2::normalize() {
 
 // Return the corresponding absolute value vector
 RP3D_FORCE_INLINE Vector2 Vector2::getAbsoluteVector() const {
-    return Vector2(std::abs(x), std::abs(y));
+    return Vector2(rp3dAbs(x), rp3dAbs(y));
 }
 
 // Return the axis with the minimal value

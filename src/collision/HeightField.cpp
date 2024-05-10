@@ -282,8 +282,8 @@ bool HeightField::raycast(const Ray& ray, RaycastInfo& raycastInfo, Collider* co
         decimal sizeJ = aabbSize.z / nbCellsJ;
         decimal tMaxI = ((nextI * sizeI) - outHitGridPoint.x) / rayDirection.x;
         decimal tMaxJ = ((nextJ * sizeJ) - outHitGridPoint.z) / rayDirection.z;
-        decimal tDeltaI = sizeI / std::abs(rayDirection.x);
-        decimal tDeltaJ = sizeJ / std::abs(rayDirection.z);
+        decimal tDeltaI = sizeI / rp3dAbs(rayDirection.x);
+        decimal tDeltaJ = sizeJ / rp3dAbs(rayDirection.z);
 
         decimal smallestHitFraction = ray.maxFraction;
 

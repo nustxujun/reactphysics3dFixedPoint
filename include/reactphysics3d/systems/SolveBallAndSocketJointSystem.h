@@ -150,7 +150,7 @@ RP3D_FORCE_INLINE void SolveBallAndSocketJointSystem::setIsWarmStartingActive(bo
 RP3D_FORCE_INLINE decimal SolveBallAndSocketJointSystem::computeCurrentConeHalfAngle(const Vector3& coneLimitWorldAxisBody1,
                                                                                      const Vector3& coneLimitWorldAxisBody2) {
 
-    return std::acos(coneLimitWorldAxisBody1.dot(coneLimitWorldAxisBody2));
+    return rp3dAcos(coneLimitWorldAxisBody1.dot(coneLimitWorldAxisBody2));
 }
 
 }

@@ -327,7 +327,7 @@ RP3D_FORCE_INLINE bool AABB::raycast(const Ray& ray, Vector3& hitPoint) const {
     for (int i=0; i < 3; i++) {
 
         // If the ray is parallel to the slab
-        if (std::abs(rayDirection[i]) < epsilon) {
+        if (rp3dAbs(rayDirection[i]) < epsilon) {
 
             // If origin of the ray is not inside the slab, no hit
             if (ray.point1[i] < mMinCoordinates[i] || ray.point1[i] > mMaxCoordinates[i]) return false;

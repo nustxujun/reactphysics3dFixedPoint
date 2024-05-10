@@ -65,10 +65,10 @@ openglframework::Matrix4 PhysicsObject::computeTransform(float interpolationFact
     // Compute the transform used for rendering the box
     rp3d::decimal matrix[16];
     interpolatedTransform.getOpenGLMatrix(matrix);
-    openglframework::Matrix4 newMatrix(matrix[0], matrix[4], matrix[8], matrix[12],
-                                       matrix[1], matrix[5], matrix[9], matrix[13],
-                                       matrix[2], matrix[6], matrix[10], matrix[14],
-                                       matrix[3], matrix[7], matrix[11], matrix[15]);
+    openglframework::Matrix4 newMatrix((float)matrix[0], (float)matrix[4], (float)matrix[8], (float)matrix[12],
+                                        (float)matrix[1], (float)matrix[5], (float)matrix[9], (float)matrix[13],
+                                        (float)matrix[2], (float)matrix[6], (float)matrix[10], (float)matrix[14],
+                                        (float)matrix[3], (float)matrix[7], (float)matrix[11], (float)matrix[15]);
 
     // Apply the scaling matrix to have the correct box dimensions
     return newMatrix * scalingMatrix;

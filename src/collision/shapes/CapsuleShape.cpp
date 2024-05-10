@@ -123,7 +123,7 @@ bool CapsuleShape::raycast(const Ray& ray, RaycastInfo& raycastInfo, Collider* c
     decimal c = dDotD * k - mDotD * mDotD;
 
     // If the ray is parallel to the capsule axis
-    if (std::abs(a) < epsilon) {
+    if (rp3dAbs(a) < epsilon) {
 
         // If the origin is outside the surface of the capusle's cylinder, we return no hit
         if (c > decimal(0.0)) return false;
@@ -178,7 +178,7 @@ bool CapsuleShape::raycast(const Ray& ray, RaycastInfo& raycastInfo, Collider* c
     if (discriminant < decimal(0.0)) return false;
 
     // Compute the smallest root (first intersection along the ray)
-    decimal t0 = t = (-b - std::sqrt(discriminant)) / a;
+    decimal t0 = t = (-b - rp3dSqrt(discriminant)) / a;
 
     // If the intersection is outside the finite cylinder of the capsule on "p" endcap side
     decimal value = mDotD + t * nDotD;
@@ -266,7 +266,7 @@ bool CapsuleShape::raycastWithSphereEndCap(const Vector3& point1, const Vector3&
     if (discriminant < decimal(0.0) || raySquareLength < MACHINE_EPSILON) return false;
 
     // Compute the solution "t" closest to the origin
-    decimal t = -b - std::sqrt(discriminant);
+    decimal t = -b - rp3dSqrt(discriminant);
 
     assert(t >= decimal(0.0));
 

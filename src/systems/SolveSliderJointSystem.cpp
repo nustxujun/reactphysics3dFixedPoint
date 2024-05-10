@@ -185,7 +185,7 @@ void SolveSliderJointSystem::initBeforeSolve() {
         Matrix2x2 matrixKTranslation(el11, el12, el21, el22);
         mSliderJointComponents.mInverseMassMatrixTranslation[i].setToZero();
         decimal matrixKTranslationDeterminant = matrixKTranslation.getDeterminant();
-        if (std::abs(matrixKTranslationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(matrixKTranslationDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
 
@@ -197,7 +197,7 @@ void SolveSliderJointSystem::initBeforeSolve() {
         // contraints (3x3 matrix)
         mSliderJointComponents.mInverseMassMatrixRotation[i] = i1 + i2;
         decimal massMatrixRotationDeterminant = mSliderJointComponents.mInverseMassMatrixRotation[i].getDeterminant();
-        if (std::abs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
 
@@ -700,7 +700,7 @@ void SolveSliderJointSystem::solvePositionConstraint() {
         // contraints (3x3 matrix)
         mSliderJointComponents.mInverseMassMatrixRotation[i] = mSliderJointComponents.mI1[i] + mSliderJointComponents.mI2[i];
         decimal massMatrixRotationDeterminant = mSliderJointComponents.mInverseMassMatrixRotation[i].getDeterminant();
-        if (std::abs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC || mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
 
@@ -784,7 +784,7 @@ void SolveSliderJointSystem::solvePositionConstraint() {
         Matrix2x2 matrixKTranslation(el11, el12, el21, el22);
         mSliderJointComponents.mInverseMassMatrixTranslation[i].setToZero();
         decimal matrixKTranslationDeterminant = matrixKTranslation.getDeterminant();
-        if (std::abs(matrixKTranslationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(matrixKTranslationDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC || mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
 

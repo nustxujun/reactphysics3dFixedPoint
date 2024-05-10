@@ -100,7 +100,7 @@ void SolveBallAndSocketJointSystem::initBeforeSolve() {
         // Compute the inverse mass matrix K^-1
         mBallAndSocketJointComponents.mInverseMassMatrix[i].setToZero();
         decimal massMatrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(massMatrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mBallAndSocketJointComponents.mInverseMassMatrix[i] = massMatrix.getInverse(massMatrixDeterminant);
@@ -398,7 +398,7 @@ void SolveBallAndSocketJointSystem::solvePositionConstraint() {
                                skewSymmetricMatrixU2 * mBallAndSocketJointComponents.mI2[i] * skewSymmetricMatrixU2.getTranspose();
         mBallAndSocketJointComponents.mInverseMassMatrix[i].setToZero();
         decimal massMatrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(massMatrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {

@@ -26,15 +26,24 @@
 #ifndef REACTPHYSICS3D_DECIMAL_H
 #define	REACTPHYSICS3D_DECIMAL_H
 
+#include "FixedPoint.h"
+
 /// ReactPhysiscs3D namespace
 namespace reactphysics3d {
 
+#ifdef RP3D_USE_FIXED
+#if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
+    error("not support double percision")
+#else
+    using decimal = FixedPoint;
+#endif
+#else
 #if defined(IS_RP3D_DOUBLE_PRECISION_ENABLED)   // If we are compiling for double precision
     using decimal = double;
 #else                                   // If we are compiling for single precision
     using decimal = float;
 #endif
-
+#endif
 }
 
 #endif

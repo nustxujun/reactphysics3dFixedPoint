@@ -34,9 +34,9 @@ ConvexHull::ConvexHull(reactphysics3d::BodyType type, bool isSimulationCollider,
            : ConvexMesh(physicsCommon, physicsWorld, meshPath) {
 
     // Compute the scaling matrix
-    mScalingMatrix = openglframework::Matrix4(scaling.x, 0, 0, 0,
-                                              0, scaling.y, 0, 0,
-                                              0, 0, scaling.z, 0,
+    mScalingMatrix = openglframework::Matrix4((float)scaling.x, 0, 0, 0,
+                                              0, (float)scaling.y, 0, 0,
+                                              0, 0, (float)scaling.z, 0,
                                               0, 0, 0, 1);
 
     // Vertex array with all vertices of the triangle mesh

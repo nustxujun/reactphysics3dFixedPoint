@@ -406,7 +406,7 @@ RP3D_FORCE_INLINE void BallAndSocketJointComponents::setIsConeLimitEnabled(Entit
 RP3D_FORCE_INLINE bool BallAndSocketJointComponents::getConeLimitImpulse(Entity jointEntity) const {
 
     assert(mMapEntityToComponentIndex.containsKey(jointEntity));
-    return mConeLimitImpulse[mMapEntityToComponentIndex[jointEntity]];
+    return mConeLimitImpulse[mMapEntityToComponentIndex[jointEntity]] != decimal(0);
 }
 
 // Set the cone limit impulse
@@ -434,7 +434,7 @@ RP3D_FORCE_INLINE void BallAndSocketJointComponents::setConeLimitHalfAngle(Entit
 RP3D_FORCE_INLINE bool BallAndSocketJointComponents::getInverseMassMatrixConeLimit(Entity jointEntity) const {
 
     assert(mMapEntityToComponentIndex.containsKey(jointEntity));
-    return mInverseMassMatrixConeLimit[mMapEntityToComponentIndex[jointEntity]];
+    return mInverseMassMatrixConeLimit[mMapEntityToComponentIndex[jointEntity]] != decimal(0);
 }
 
 // Set the inverse mass matrix cone limit

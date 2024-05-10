@@ -80,10 +80,10 @@ class RaycastManager : public rp3d::RaycastCallback {
         virtual rp3d::decimal notifyRaycastHit(const rp3d::RaycastInfo& raycastInfo) override {
 
 			rp3d::Vector3 n = raycastInfo.worldNormal;
-			openglframework::Vector3 normal(n.x, n.y, n.z);
+			openglframework::Vector3 normal((float)n.x, (float)n.y, (float)n.z);
 
             rp3d::Vector3 hitPos = raycastInfo.worldPoint;
-            openglframework::Vector3 position(hitPos.x, hitPos.y, hitPos.z);
+            openglframework::Vector3 position((float)hitPos.x, (float)hitPos.y, (float)hitPos.z);
             mHitPoints.push_back(SceneContactPoint(position, normal, openglframework::Color::red()));
 
             return raycastInfo.hitFraction;

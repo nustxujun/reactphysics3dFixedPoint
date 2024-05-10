@@ -73,9 +73,9 @@ void BroadPhaseSystem::raycast(const Ray& ray, RaycastTest& raycastTest, unsigne
 
     BroadPhaseRaycastCallback broadPhaseRaycastCallback(mDynamicAABBTree, raycastWithCategoryMaskBits, raycastTest);
 
-    // Compute the inverse ray direction
-    const Vector3 rayDirection = ray.point2 - ray.point1;
-    const Vector3 rayDirectionInverse(decimal(1.0) / rayDirection.x, decimal(1.0) / rayDirection.y, decimal(1.0) / rayDirection.z);
+    //// Compute the inverse ray direction
+    //const Vector3 rayDirection = ray.point2 - ray.point1;
+    //const Vector3 rayDirectionInverse(decimal(1.0) / rayDirection.x, decimal(1.0) / rayDirection.y, decimal(1.0) / rayDirection.z);
 
     mDynamicAABBTree.raycast(ray, broadPhaseRaycastCallback);
 }

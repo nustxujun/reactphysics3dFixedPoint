@@ -191,7 +191,7 @@ void GJKAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInfoBatch, uin
 
             // Project those two points on the margins to have the closest points of both
             // object with the margins
-            decimal dist = std::sqrt(distSquare);
+            decimal dist = rp3dSqrt(distSquare);
             assert(dist > decimal(0.0));
 
             pA = (pA - (shape1->getMargin() / dist) * v);

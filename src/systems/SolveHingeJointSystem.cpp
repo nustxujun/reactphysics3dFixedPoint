@@ -110,7 +110,7 @@ void SolveHingeJointSystem::initBeforeSolve() {
         Matrix3x3& inverseMassMatrixTranslation = mHingeJointComponents.mInverseMassMatrixTranslation[i];
         inverseMassMatrixTranslation.setToZero();
         decimal massMatrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(massMatrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mHingeJointComponents.mInverseMassMatrixTranslation[i] = massMatrix.getInverse(massMatrixDeterminant);
@@ -144,7 +144,7 @@ void SolveHingeJointSystem::initBeforeSolve() {
         const Matrix2x2 matrixKRotation(el11, el12, el21, el22);
         mHingeJointComponents.mInverseMassMatrixRotation[i].setToZero();
         decimal matrixKRotationDeterminant = matrixKRotation.getDeterminant();
-        if (std::abs(matrixKRotationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(matrixKRotationDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mHingeJointComponents.mInverseMassMatrixRotation[i] = matrixKRotation.getInverse(matrixKRotationDeterminant);
@@ -620,7 +620,7 @@ void SolveHingeJointSystem::solvePositionConstraint() {
         const Matrix2x2 matrixKRotation(el11, el12, el21, el22);
         mHingeJointComponents.mInverseMassMatrixRotation[i].setToZero();
         decimal matrixDeterminant = matrixKRotation.getDeterminant();
-        if (std::abs(matrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(matrixDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mHingeJointComponents.mInverseMassMatrixRotation[i] = matrixKRotation.getInverse(matrixDeterminant);
@@ -666,7 +666,7 @@ void SolveHingeJointSystem::solvePositionConstraint() {
                                skewSymmetricMatrixU2 * mHingeJointComponents.mI2[i] * skewSymmetricMatrixU2.getTranspose();
         mHingeJointComponents.mInverseMassMatrixTranslation[i].setToZero();
         matrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(matrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(matrixDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
@@ -719,7 +719,7 @@ void SolveHingeJointSystem::solvePositionConstraint() {
 decimal SolveHingeJointSystem::computeNormalizedAngle(decimal angle) const {
 
     // Convert it into the range [-2*pi; 2*pi]
-    angle = std::fmod(angle, PI_TIMES_2);
+    angle = rp3dFmod(angle, PI_TIMES_2);
 
     // Convert it into the range [-pi; pi]
     if (angle < -PI_RP3D) {
@@ -741,13 +741,13 @@ decimal SolveHingeJointSystem::computeCorrespondingAngleNearLimits(decimal input
         return inputAngle;
     }
     else if (inputAngle > upperLimitAngle) {
-        decimal diffToUpperLimit = std::abs(computeNormalizedAngle(inputAngle - upperLimitAngle));
-        decimal diffToLowerLimit = std::abs(computeNormalizedAngle(inputAngle - lowerLimitAngle));
+        decimal diffToUpperLimit = rp3dAbs(computeNormalizedAngle(inputAngle - upperLimitAngle));
+        decimal diffToLowerLimit = rp3dAbs(computeNormalizedAngle(inputAngle - lowerLimitAngle));
         return (diffToUpperLimit > diffToLowerLimit) ? (inputAngle - PI_TIMES_2) : inputAngle;
     }
     else if (inputAngle < lowerLimitAngle) {
-        decimal diffToUpperLimit = std::abs(computeNormalizedAngle(upperLimitAngle - inputAngle));
-        decimal diffToLowerLimit = std::abs(computeNormalizedAngle(lowerLimitAngle - inputAngle));
+        decimal diffToUpperLimit = rp3dAbs(computeNormalizedAngle(upperLimitAngle - inputAngle));
+        decimal diffToLowerLimit = rp3dAbs(computeNormalizedAngle(lowerLimitAngle - inputAngle));
         return (diffToUpperLimit > diffToLowerLimit) ? inputAngle : (inputAngle + PI_TIMES_2);
     }
     else {
@@ -783,10 +783,10 @@ decimal SolveHingeJointSystem::computeCurrentHingeAngle(Entity jointEntity, cons
 
     // If the relative rotation axis and the hinge axis are pointing the same direction
     if (dotProduct >= decimal(0.0)) {
-        hingeAngle = decimal(2.0) * std::atan2(sinHalfAngleAbs, cosHalfAngle);
+        hingeAngle = decimal(2.0) * rp3dAtan2(sinHalfAngleAbs, cosHalfAngle);
     }
     else {
-        hingeAngle = decimal(2.0) * std::atan2(sinHalfAngleAbs, -cosHalfAngle);
+        hingeAngle = decimal(2.0) * rp3dAtan2(sinHalfAngleAbs, -cosHalfAngle);
     }
 
     // Convert the angle from range [-2*pi; 2*pi] into the range [-pi; pi]

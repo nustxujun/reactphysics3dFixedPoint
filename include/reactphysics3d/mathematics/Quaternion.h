@@ -226,7 +226,7 @@ RP3D_FORCE_INLINE Vector3 Quaternion::getVectorV() const {
 
 // Return the length of the quaternion (RP3D_FORCE_INLINE)
 RP3D_FORCE_INLINE decimal Quaternion::length() const {
-    return std::sqrt(x*x + y*y + z*z + w*w);
+    return rp3dSqrt(x*x + y*y + z*z + w*w);
 }
 
 // Return the square of the length of the quaternion
@@ -298,9 +298,9 @@ RP3D_FORCE_INLINE bool Quaternion::isFinite() const {
 
 // Return true if it is a unit quaternion
 RP3D_FORCE_INLINE bool Quaternion::isUnit() const {
-    const decimal length = std::sqrt(x*x + y*y + z*z + w*w);
+    const decimal length = rp3dSqrt(x*x + y*y + z*z + w*w);
     const decimal tolerance = 1e-5f;
-    return std::abs(length - decimal(1.0)) < tolerance;
+    return rp3dAbs(length - decimal(1.0)) < tolerance;
 }
 
 // Return true if it is a valid quaternion

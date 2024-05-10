@@ -80,8 +80,8 @@ struct EngineSettings {
            defaultSettings.nbPositionSolverIterations = worldSettings.defaultPositionSolverNbIterations;
            defaultSettings.isSleepingEnabled = worldSettings.isSleepingEnabled;
            defaultSettings.timeBeforeSleep = worldSettings.defaultTimeBeforeSleep;
-           defaultSettings.sleepLinearVelocity = worldSettings.defaultSleepLinearVelocity;
-           defaultSettings.sleepAngularVelocity = worldSettings.defaultSleepAngularVelocity;
+           defaultSettings.sleepLinearVelocity = (float)worldSettings.defaultSleepLinearVelocity;
+           defaultSettings.sleepAngularVelocity = (float)worldSettings.defaultSleepAngularVelocity;
            defaultSettings.isGravityEnabled = true;
            defaultSettings.gravity = openglframework::Vector3(0, -9.81, 0);
 

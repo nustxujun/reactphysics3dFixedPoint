@@ -29,6 +29,12 @@
 #include <reactphysics3d/utils/Message.h>
 #include <reactphysics3d/collision/TriangleVertexArray.h>
 
+#ifdef RP3D_USE_FIXED
+#define EPSI_SQUA decimal(5e-9)
+#else
+#define EPSI_SQUA mEpsilon * mEpsilon
+#endif
+
 using namespace reactphysics3d;
 
 // Constructor
@@ -75,9 +81,9 @@ void TriangleMesh::computeEpsilon(const TriangleVertexArray& triangleVertexArray
 
         const Vector3 vertex = triangleVertexArray.getVertex(i);
 
-        decimal maxX = std::abs(vertex.x);
-        decimal maxY = std::abs(vertex.y);
-        decimal maxZ = std::abs(vertex.z);
+        decimal maxX = rp3dAbs(vertex.x);
+        decimal maxY = rp3dAbs(vertex.y);
+        decimal maxZ = rp3dAbs(vertex.z);
         if (maxX > max.x) max.x = maxX;
         if (maxY > max.y) max.y = maxY;
         if (maxZ > max.z) max.z = maxZ;
@@ -94,7 +100,7 @@ bool TriangleMesh::copyData(const TriangleVertexArray& triangleVertexArray, std:
 
     assert(mEpsilon > 0);
 
-    const decimal epsilonSquare = mEpsilon * mEpsilon;
+    const decimal epsilonSquare = EPSI_SQUA;
 
     Array<bool> areUserVerticesUsed(mAllocator);
     for (uint32 i=0 ; i < triangleVertexArray.getNbVertices(); i++) {
@@ -303,15 +309,15 @@ void TriangleMesh::computeVerticesNormals() {
             // Weighted normal using angle
             const decimal dotProduct = a.dot(b);
             decimal lengthATimesLengthB = (edgesLengths[previousVertex] * edgesLengths[v]);
-            assert(lengthATimesLengthB * lengthATimesLengthB >= mEpsilon * mEpsilon);
+            assert(lengthATimesLengthB * lengthATimesLengthB >= EPSI_SQUA);
 
             decimal cosA = dotProduct / lengthATimesLengthB;
             cosA = std::min(std::max(cosA, decimal(0.0)), decimal(1.0));    // Angle inside a triangle should be in [0, pi]
-            const decimal angle = std::acos(cosA);
+            const decimal angle = rp3dAcos(cosA);
             assert(angle >= decimal(0.0));
 
             Vector3 normal = a.cross(b);
-            assert(normal.lengthSquare() > mEpsilon * mEpsilon);
+            assert(normal.lengthSquare() > EPSI_SQUA);
             normal.normalize();
 
             // Add the normal component of this vertex into the normals array
@@ -324,7 +330,7 @@ void TriangleMesh::computeVerticesNormals() {
     // Normalize the computed vertices normals
     for (uint32 v=0; v < mVertices.size(); v++) {
 
-        assert(mVerticesNormals[v].lengthSquare() >= mEpsilon * mEpsilon);
+        assert(mVerticesNormals[v].lengthSquare() >= EPSI_SQUA);
 
         // Normalize the normal
         mVerticesNormals[v].normalize();

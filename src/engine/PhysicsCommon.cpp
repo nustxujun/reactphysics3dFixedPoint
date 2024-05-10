@@ -638,7 +638,7 @@ ConvexMesh* PhysicsCommon::createConvexMesh(const VertexArray& vertexArray, std:
     MemoryAllocator& allocator = mMemoryManager.getHeapAllocator();
 
     PolygonVertexArray outPolygonVertexArray;
-    Array<float> vertices(allocator);
+    Array<decimal> vertices(allocator);
     Array<unsigned int> indices(allocator);
     Array<PolygonVertexArray::PolygonFace> faces(allocator);
 

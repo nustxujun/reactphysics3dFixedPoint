@@ -93,7 +93,7 @@ void SolveFixedJointSystem::initBeforeSolve() {
         // Compute the inverse mass matrix K^-1 for the 3 translation constraints
         mFixedJointComponents.mInverseMassMatrixTranslation[i].setToZero();
         decimal massMatrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(massMatrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mFixedJointComponents.mInverseMassMatrixTranslation[i] = massMatrix.getInverse(massMatrixDeterminant);
@@ -116,7 +116,7 @@ void SolveFixedJointSystem::initBeforeSolve() {
         // Compute the inverse of the mass matrix K=JM^-1J^t for the 3 rotation contraints (3x3 matrix)
         mFixedJointComponents.mInverseMassMatrixRotation[i] = mFixedJointComponents.mI1[i] + mFixedJointComponents.mI2[i];
         decimal massMatrixRotationDeterminant = mFixedJointComponents.mInverseMassMatrixRotation[i].getDeterminant();
-        if (std::abs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
                 mFixedJointComponents.mInverseMassMatrixRotation[i] = mFixedJointComponents.mInverseMassMatrixRotation[i].getInverse(massMatrixRotationDeterminant);
@@ -342,7 +342,7 @@ void SolveFixedJointSystem::solvePositionConstraint() {
                                skewSymmetricMatrixU2 * mFixedJointComponents.mI2[i] * skewSymmetricMatrixU2.getTranspose();
         mFixedJointComponents.mInverseMassMatrixTranslation[i].setToZero();
         decimal massMatrixDeterminant = massMatrix.getDeterminant();
-        if (std::abs(massMatrixDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {
@@ -389,7 +389,7 @@ void SolveFixedJointSystem::solvePositionConstraint() {
         // contraints (3x3 matrix)
         mFixedJointComponents.mInverseMassMatrixRotation[i] = mFixedJointComponents.mI1[i] + mFixedJointComponents.mI2[i];
         decimal massMatrixRotationDeterminant = mFixedJointComponents.mInverseMassMatrixRotation[i].getDeterminant();
-        if (std::abs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
+        if (rp3dAbs(massMatrixRotationDeterminant) > MACHINE_EPSILON) {
 
             if (mRigidBodyComponents.mBodyTypes[componentIndexBody1] == BodyType::DYNAMIC ||
                 mRigidBodyComponents.mBodyTypes[componentIndexBody2] == BodyType::DYNAMIC) {

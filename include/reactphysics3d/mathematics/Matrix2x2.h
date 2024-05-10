@@ -236,8 +236,8 @@ RP3D_FORCE_INLINE Matrix2x2 Matrix2x2::getInverse() const {
 
 // Return the matrix with absolute values
 RP3D_FORCE_INLINE Matrix2x2 Matrix2x2::getAbsoluteMatrix() const {
-    return Matrix2x2(std::abs(mRows[0][0]), std::abs(mRows[0][1]),
-                     std::abs(mRows[1][0]), std::abs(mRows[1][1]));
+    return Matrix2x2(rp3dAbs(mRows[0][0]), rp3dAbs(mRows[0][1]),
+                     rp3dAbs(mRows[1][0]), rp3dAbs(mRows[1][1]));
 }
 
 // Overloaded operator for addition

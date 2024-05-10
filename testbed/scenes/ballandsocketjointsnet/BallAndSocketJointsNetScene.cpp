@@ -99,13 +99,13 @@ BallAndSocketJointsNetScene::BallAndSocketJointsNetScene(const std::string& name
     // Get the physics engine parameters
     mEngineSettings.isGravityEnabled = mPhysicsWorld->isGravityEnabled();
     rp3d::Vector3 gravityVector = mPhysicsWorld->getGravity();
-    mEngineSettings.gravity = openglframework::Vector3(gravityVector.x, gravityVector.y, gravityVector.z);
+    mEngineSettings.gravity = openglframework::Vector3((float)gravityVector.x, (float)gravityVector.y, (float)gravityVector.z);
     mEngineSettings.isSleepingEnabled = mPhysicsWorld->isSleepingEnabled();
-    mEngineSettings.sleepLinearVelocity = mPhysicsWorld->getSleepLinearVelocity();
-    mEngineSettings.sleepAngularVelocity = mPhysicsWorld->getSleepAngularVelocity();
+    mEngineSettings.sleepLinearVelocity = (float)mPhysicsWorld->getSleepLinearVelocity();
+    mEngineSettings.sleepAngularVelocity = (float)mPhysicsWorld->getSleepAngularVelocity();
     mEngineSettings.nbPositionSolverIterations = mPhysicsWorld->getNbIterationsPositionSolver();
     mEngineSettings.nbVelocitySolverIterations = mPhysicsWorld->getNbIterationsVelocitySolver();
-    mEngineSettings.timeBeforeSleep = mPhysicsWorld->getTimeBeforeSleep();
+    mEngineSettings.timeBeforeSleep = (float)mPhysicsWorld->getTimeBeforeSleep();
 }
 
 // Destructor

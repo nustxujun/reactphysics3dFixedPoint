@@ -80,7 +80,7 @@ RP3D_FORCE_INLINE bool areParallelVectors(const Vector3& vector1, const Vector3&
 
 // Return true if two vectors are orthogonal
 RP3D_FORCE_INLINE bool areOrthogonalVectors(const Vector3& vector1, const Vector3& vector2) {
-    return std::abs(vector1.dot(vector2)) < decimal(0.001);
+    return rp3dAbs(vector1.dot(vector2)) < decimal(0.001);
 }
 
 
@@ -231,7 +231,7 @@ RP3D_FORCE_INLINE decimal computePlaneSegmentIntersection(const Vector3& segA, c
     const decimal nDotAB = planeNormal.dot(segB - segA);
 
     // If the segment is not parallel to the plane
-    if (std::abs(nDotAB) > parallelEpsilon) {
+    if (rp3dAbs(nDotAB) > parallelEpsilon) {
         t = (planeD - planeNormal.dot(segA)) / nDotAB;
     }
 

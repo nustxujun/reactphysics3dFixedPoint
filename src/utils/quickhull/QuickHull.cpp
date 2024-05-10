@@ -42,7 +42,7 @@ using namespace reactphysics3d;
 
 // Compute the convex hull of a set of points and return the resulting convex mesh
 bool QuickHull::computeConvexHull(const VertexArray& vertexArray, PolygonVertexArray& outPolygonVertexArray,
-                                  Array<float>& outVertices, Array<unsigned int>& outIndices,
+                                  Array<decimal>& outVertices, Array<unsigned int>& outIndices,
                                   Array<PolygonVertexArray::PolygonFace>& outFaces, MemoryAllocator& allocator,
                                   std::vector<Message>& errors) {
 
@@ -69,9 +69,9 @@ bool QuickHull::computeConvexHull(const VertexArray& vertexArray, PolygonVertexA
     for (uint32 i=0 ; i < points.size(); i++) {
         orphanPointsIndices.add(i);
 
-        decimal absX = std::abs(points[i].x);
-        decimal absY = std::abs(points[i].y);
-        decimal absZ = std::abs(points[i].z);
+        decimal absX = rp3dAbs(points[i].x);
+        decimal absY = rp3dAbs(points[i].y);
+        decimal absZ = rp3dAbs(points[i].z);
 
         if (absX > maxAbsX) {
             maxAbsX = absX;
@@ -135,7 +135,7 @@ bool QuickHull::computeConvexHull(const VertexArray& vertexArray, PolygonVertexA
 void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convexHull,
                                                const Array<Vector3>& points,
                                                PolygonVertexArray& outPolygonVertexArray,
-                                               Array<float>& outVertices, Array<unsigned int>& outIndices,
+                                               Array<decimal>& outVertices, Array<unsigned int>& outIndices,
                                                Array<PolygonVertexArray::PolygonFace>& outFaces,
                                                MemoryAllocator& allocator) {
 
@@ -774,9 +774,9 @@ void QuickHull::removeDuplicatedVertices(Array<Vector3>& points, MemoryAllocator
         uint32 j;
         for (j=0; j < pointsToKeep.size(); j++) {
 
-            decimal dx = std::abs(pointsToKeep[j].x - points[i].x);
-            decimal dy = std::abs(pointsToKeep[j].y - points[i].y);
-            decimal dz = std::abs(pointsToKeep[j].z - points[i].z);
+            decimal dx = rp3dAbs(pointsToKeep[j].x - points[i].x);
+            decimal dy = rp3dAbs(pointsToKeep[j].y - points[i].y);
+            decimal dz = rp3dAbs(pointsToKeep[j].z - points[i].z);
 
             // If the points are nearly the same
             if (dx < distanceEpsilon && dy < distanceEpsilon && dz < distanceEpsilon) {
@@ -974,7 +974,7 @@ bool QuickHull::computeInitialHull(Array<Vector3>& points, QHHalfEdgeStructure& 
     for (uint32 i=0; i < nbPoints; i++) {
 
         Vector3 vec = points[i] - points[i1];
-        const decimal distSquare = std::abs(vec.dot(planeNormal));
+        const decimal distSquare = rp3dAbs(vec.dot(planeNormal));
 
         if (distSquare > maxLargestDistSquare) {
            i4 = i;

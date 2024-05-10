@@ -63,7 +63,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
     if (trace < decimal(0.0)) {
         if (matrix[1][1] > matrix[0][0]) {
             if(matrix[2][2] > matrix[1][1]) {
-                r = std::sqrt(matrix[2][2] - matrix[0][0] - matrix[1][1] + decimal(1.0));
+                r = rp3dSqrt(matrix[2][2] - matrix[0][0] - matrix[1][1] + decimal(1.0));
                 s = decimal(0.5) / r;
                 
                 // Compute the quaternion
@@ -73,7 +73,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
                 w = (matrix[1][0] - matrix[0][1]) * s;
             }
             else {
-                r = std::sqrt(matrix[1][1] - matrix[2][2] - matrix[0][0] + decimal(1.0));
+                r = rp3dSqrt(matrix[1][1] - matrix[2][2] - matrix[0][0] + decimal(1.0));
                 s = decimal(0.5) / r;
 
                 // Compute the quaternion
@@ -84,7 +84,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
             }
         }
         else if (matrix[2][2] > matrix[0][0]) {
-            r = std::sqrt(matrix[2][2] - matrix[0][0] - matrix[1][1] + decimal(1.0));
+            r = rp3dSqrt(matrix[2][2] - matrix[0][0] - matrix[1][1] + decimal(1.0));
             s = decimal(0.5) / r;
 
             // Compute the quaternion
@@ -94,7 +94,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
             w = (matrix[1][0] - matrix[0][1]) * s;
         }
         else {
-            r = std::sqrt(matrix[0][0] - matrix[1][1] - matrix[2][2] + decimal(1.0));
+            r = rp3dSqrt(matrix[0][0] - matrix[1][1] - matrix[2][2] + decimal(1.0));
             s = decimal(0.5) / r;
 
             // Compute the quaternion
@@ -105,7 +105,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
         }
     }
     else {
-        r = std::sqrt(trace + decimal(1.0));
+        r = rp3dSqrt(trace + decimal(1.0));
         s = decimal(0.5) / r;
 
         // Compute the quaternion
@@ -122,7 +122,7 @@ Quaternion::Quaternion(const Matrix3x3& matrix) {
 void Quaternion::getRotationAngleAxis(decimal& angle, Vector3& axis) const {
 
     // Compute the roation angle
-    angle = std::acos(w) * decimal(2.0);
+    angle = rp3dAcos(w) * decimal(2.0);
 
     // Compute the 3D rotation axis
     Vector3 rotationAxis(x, y, z);
@@ -190,14 +190,14 @@ Quaternion Quaternion::slerp(const Quaternion& quaternion1,
     }
 
     // Compute the theta angle
-    decimal theta = std::acos(cosineTheta);
+    decimal theta = rp3dAcos(cosineTheta);
 
     // Compute sin(theta)
-    decimal sineTheta = std::sin(theta);
+    decimal sineTheta = rp3dSin(theta);
 
     // Compute the two coefficients that are in the spherical linear interpolation formula
-    decimal coeff1 = std::sin((decimal(1.0)-t)*theta) / sineTheta;
-    decimal coeff2 = std::sin(t*theta) / sineTheta * invert;
+    decimal coeff1 = rp3dSin((decimal(1.0)-t)*theta) / sineTheta;
+    decimal coeff2 = rp3dSin(t*theta) / sineTheta * invert;
 
     // Compute and return the interpolated quaternion
     return quaternion1 * coeff1 + quaternion2 * coeff2;
@@ -207,16 +207,16 @@ Quaternion Quaternion::slerp(const Quaternion& quaternion1,
 void Quaternion::initWithEulerAngles(decimal angleX, decimal angleY, decimal angleZ) {
 
     decimal angle = angleX * decimal(0.5);
-    const decimal sinX = std::sin(angle);
-    const decimal cosX = std::cos(angle);
+    const decimal sinX = rp3dSin(angle);
+    const decimal cosX = rp3dCos(angle);
 
     angle = angleY * decimal(0.5);
-    const decimal sinY = std::sin(angle);
-    const decimal cosY = std::cos(angle);
+    const decimal sinY = rp3dSin(angle);
+    const decimal cosY = rp3dCos(angle);
 
     angle = angleZ * decimal(0.5);
-    const decimal sinZ = std::sin(angle);
-    const decimal cosZ = std::cos(angle);
+    const decimal sinZ = rp3dSin(angle);
+    const decimal cosZ = rp3dCos(angle);
 
     const decimal cosYcosZ = cosY * cosZ;
     const decimal sinYcosZ = sinY * cosZ;

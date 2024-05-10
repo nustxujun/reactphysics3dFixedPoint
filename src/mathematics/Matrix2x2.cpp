@@ -32,7 +32,7 @@ using namespace reactphysics3d;
 Matrix2x2 Matrix2x2::getInverse(decimal determinant) const {
 
     // Check if the determinant is equal to zero
-    assert(std::abs(determinant) > MACHINE_EPSILON);
+    assert(rp3dAbs(determinant) > MACHINE_EPSILON);
 
     decimal invDeterminant = decimal(1.0) / determinant;
 

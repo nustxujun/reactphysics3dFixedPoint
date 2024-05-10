@@ -129,7 +129,7 @@ RP3D_FORCE_INLINE decimal Material::getFrictionCoefficient() const {
  */
 RP3D_FORCE_INLINE void Material::setFrictionCoefficient(decimal frictionCoefficient) {
     assert(frictionCoefficient >= decimal(0.0));
-    mFrictionCoefficientSqrt = std::sqrt(frictionCoefficient);
+    mFrictionCoefficientSqrt = rp3dSqrt(frictionCoefficient);
 }
 
 // Return the square root friction coefficient

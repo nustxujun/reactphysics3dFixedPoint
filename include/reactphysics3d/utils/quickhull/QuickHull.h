@@ -158,7 +158,7 @@ class QuickHull {
         static void computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convexHull,
                                                    const Array<Vector3>& points,
                                                    PolygonVertexArray& outPolygonVertexArray,
-                                                   Array<float>& outVertices, Array<unsigned int>& outIndices,
+                                                   Array<decimal>& outVertices, Array<unsigned int>& outIndices,
                                                    Array<PolygonVertexArray::PolygonFace>& outFaces,
                                                    MemoryAllocator& allocator);
 
@@ -168,7 +168,7 @@ class QuickHull {
 
         /// Compute the convex hull of a set of points and returns true if there are no errors
         static bool computeConvexHull(const VertexArray& vertexArray, PolygonVertexArray& outPolygonVertexArray,
-                                      Array<float>& outVertices, Array<unsigned int>& outIndices,
+                                      Array<decimal>& outVertices, Array<unsigned int>& outIndices,
                                       Array<PolygonVertexArray::PolygonFace>& outFaces,
                                       MemoryAllocator& allocator, std::vector<Message>& errors);
 

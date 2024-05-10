@@ -311,17 +311,17 @@ void ContactManager::onContact(const CallbackData& callbackData) {
 
             // Contact normal
             rp3d::Vector3 normal = contactPoint.getWorldNormal();
-            openglframework::Vector3 contactNormal(normal.x, normal.y, normal.z);
+            openglframework::Vector3 contactNormal((float)normal.x, (float)normal.y, (float)normal.z);
 
             rp3d::Vector3 point1 = contactPoint.getLocalPointOnCollider1();
             point1 = contactPair.getCollider1()->getLocalToWorldTransform() * point1;
 
-            openglframework::Vector3 position1(point1.x, point1.y, point1.z);
+            openglframework::Vector3 position1((float)point1.x, (float)point1.y, (float)point1.z);
             mContactPoints.push_back(SceneContactPoint(position1, contactNormal, openglframework::Color::red()));
 
             rp3d::Vector3 point2 = contactPoint.getLocalPointOnCollider2();
             point2 = contactPair.getCollider2()->getLocalToWorldTransform() * point2;
-            openglframework::Vector3 position2(point2.x, point2.y, point2.z);
+            openglframework::Vector3 position2((float)point2.x, (float)point2.y, (float)point2.z);
             mContactPoints.push_back(SceneContactPoint(position2, contactNormal, openglframework::Color::blue()));
         }
     }

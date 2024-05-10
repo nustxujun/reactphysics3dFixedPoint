@@ -40,7 +40,7 @@ namespace reactphysics3d {
 /// Function to test if two real numbers are (almost) equal
 /// We test if two numbers a and b are such that (a-b) are in [-EPSILON; EPSILON]
 RP3D_FORCE_INLINE bool approxEqual(decimal a, decimal b, decimal epsilon = MACHINE_EPSILON) {
-    return (std::abs(a - b) < epsilon);
+    return (rp3dAbs(a - b) < epsilon);
 }
 
 

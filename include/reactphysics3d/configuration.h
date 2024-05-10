@@ -153,4 +153,6 @@ const std::string RP3D_VERSION = std::string("0.10.0");
 
 }
 
+#pragma warning(disable:4244)
+
 #endif
