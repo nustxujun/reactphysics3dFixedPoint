@@ -46,6 +46,10 @@ endif()
 set (REACTPHYSICS3D_HEADERS
     "include/reactphysics3d/configuration.h"
     "include/reactphysics3d/decimal.h"
+    "include/reactphysics3d/fixed64.hpp"
+    "include/reactphysics3d/trig_lut.hpp"
+    "include/reactphysics3d/FixedPoint.h"
+    "include/reactphysics3d/fixed.natvis"
     "include/reactphysics3d/reactphysics3d.h"
     "include/reactphysics3d/body/Body.h"
     "include/reactphysics3d/body/RigidBody.h"
