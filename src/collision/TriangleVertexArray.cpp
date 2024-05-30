@@ -154,6 +154,10 @@ Vector3 TriangleVertexArray::getVertex(uint32 vertexIndex) const {
         const double* vertices = static_cast<const double*>(vertexPointer);
         return Vector3(decimal(vertices[0]), decimal(vertices[1]), decimal(vertices[2]));
     }
+    else if (mVertexDataType == TriangleVertexArray::VertexDataType::VERTEX_FIXED_TYPE) {
+        const decimal* vertices = static_cast<const decimal*>(vertexPointer);
+        return Vector3(vertices[0], vertices[1], vertices[2]);
+    }
     else {
         assert(false);
     }

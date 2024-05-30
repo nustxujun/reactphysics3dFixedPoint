@@ -10,6 +10,7 @@
 #define FIXED_64_ENABLE_OVERFLOW 0
 #define FIXED_64_FORCE_EVALUATE_IN_COMPILE_TIME 0
 #define FIXED_64_ENABLE_INT128_ACCELERATION 0
+#define FIXED_64_ENABLE_FORCEINLINE 1
 
 #include "fixed64.hpp"
 
@@ -37,7 +38,7 @@ namespace std
 {
     constexpr inline bool isfinite(FixedPoint x) noexcept
     {
-#if FIXED_64_ENABLE_SATURATING
+#if FIXED_64_ENABLE_OVERFLOW && FIXED_64_ENABLE_SATURATING
         using limits = std::numeric_limits<FixedPoint>;
         return x != limits::max() && x != limits::min();
 #else

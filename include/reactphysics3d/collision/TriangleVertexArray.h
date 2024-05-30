@@ -48,7 +48,7 @@ class TriangleVertexArray {
     public:
 
         /// Data type for the vertices in the array
-        enum class VertexDataType {VERTEX_FLOAT_TYPE, VERTEX_DOUBLE_TYPE};
+        enum class VertexDataType {VERTEX_FLOAT_TYPE, VERTEX_DOUBLE_TYPE, VERTEX_FIXED_TYPE};
 
         /// Data type for the vertex normals in the array
         enum class NormalDataType {NORMAL_FLOAT_TYPE, NORMAL_DOUBLE_TYPE};
