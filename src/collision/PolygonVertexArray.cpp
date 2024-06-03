@@ -121,6 +121,14 @@ Vector3 PolygonVertexArray::getVertex(uint32 vertexIndex) const {
         vertex.y = decimal(vertices[1]);
         vertex.z = decimal(vertices[2]);
     }
+#ifdef RP3D_USE_FIXED
+    else if (mVertexDataType == PolygonVertexArray::VertexDataType::VERTEX_FIXED_TYPE) {
+        const decimal* vertices = (decimal*)(mVerticesStart + vertexIndex * mVerticesStride);
+        vertex.x = (vertices[0]);
+        vertex.y = (vertices[1]);
+        vertex.z = (vertices[2]);
+    }
+#endif
     else {
         assert(false);
     }

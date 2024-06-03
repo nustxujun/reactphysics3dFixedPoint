@@ -197,7 +197,11 @@ void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convex
     outPolygonVertexArray.init(outVertices.size() / 3, &(outVertices[0]), 3 * sizeof(float),
                                &(outIndices[0]), sizeof(unsigned int),
                                outFaces.size(), &(outFaces[0]),
+#ifdef RP3D_USE_FIXED
+                               PolygonVertexArray::VertexDataType::VERTEX_FIXED_TYPE,
+#else
                                PolygonVertexArray::VertexDataType::VERTEX_FLOAT_TYPE,
+#endif
                                PolygonVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
 }
 
@@ -1070,6 +1074,14 @@ void QuickHull::extractPoints(const VertexArray& vertexArray, Array<Vector3>& ou
             outArray.add(Vector3(points[0], points[1], points[2]));
         }
     }
+#ifdef RP3D_USE_FIXED
+    else if (vertexArray.getDataType() == VertexArray::DataType::VERTEX_FIXED_TYPE) {
+        for (uint32 p = 0; p < vertexArray.getNbVertices(); p++) {
+            const decimal* points = (decimal*)(pointsStartPointer + p * vertexArray.getStride());
+            outArray.add(Vector3(points[0], points[1], points[2]));
+        }
+    }
+#endif
     else {
         assert(false);
     }

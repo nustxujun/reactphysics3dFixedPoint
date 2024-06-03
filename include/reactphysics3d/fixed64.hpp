@@ -5,6 +5,15 @@
 #include <array>
 #include <assert.h>
 #include <ios>
+#include <bit> // for clz
+#include <iostream> 
+#include <string>
+
+#if __cplusplus >= 202002L // c++20, MSVC requires /Zc:__cplusplus
+#define FIXED_64_ENABLE_CPP20 1
+#else
+#define FIXED_64_ENABLE_CPP20 0
+#endif
 
 #ifndef FIXED_64_ENABLE_ROUNDING
 #define FIXED_64_ENABLE_ROUNDING 0
@@ -140,7 +149,7 @@ namespace f64
 
 		static constexpr FIXED_64_FORCEINLINE fixed64 from_raw(fixed_raw val) noexcept
 		{
-			fixed64 ret;
+			fixed64 ret{};
 			ret.value = val;
 			return ret;
 		}
@@ -271,7 +280,7 @@ namespace f64
 			while (remainder && bit_pos >= 0)
 			{
 				// Shift remainder as much as we can without overflowing
-				int shift = clz(remainder);
+				auto shift = clz(remainder);
 				if (shift > bit_pos) shift = bit_pos;
 				remainder <<= shift;
 				bit_pos -= shift;
@@ -394,7 +403,7 @@ namespace f64
 
 		static constexpr FIXED_64_FORCEINLINE long clz(internal_type value) noexcept
 		{
-#if __cplusplus >= 202002L // c++20, MSVC requires /Zc:__cplusplus
+#if FIXED_64_ENABLE_CPP20
 			return std::countl_zero(value);
 #elif defined(_MSC_VER) && !FIXED_64_FORCE_EVALUATE_IN_COMPILE_TIME
 			if (value == 0) return 64;
@@ -440,7 +449,7 @@ namespace f64
 	};
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> ceil(fixed64<F> v) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> ceil(fixed64<F> v) noexcept
 	{
 		constexpr auto FRAC = fixed64<F>::FRACTION;
 		auto value = v.raw_value();
@@ -449,7 +458,7 @@ namespace f64
 	}
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> floor(fixed64<F> v) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> floor(fixed64<F> v) noexcept
 	{
 		constexpr auto FRAC = fixed64<F>::FRACTION;
 		auto value = v.raw_value();
@@ -458,7 +467,7 @@ namespace f64
 	}
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> round(fixed64<F> v) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> round(fixed64<F> v) noexcept
 
 	{
 		constexpr auto FRAC = fixed64<F>::FRACTION;
@@ -468,13 +477,13 @@ namespace f64
 
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> abs(fixed64<F> v) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> abs(fixed64<F> v) noexcept
 	{
 		return (v >= fixed64<F>{0}) ? v : -v;
 	}
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> fmod(fixed64<F> a, fixed64<F> b) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> fmod(fixed64<F> a, fixed64<F> b) noexcept
 	{
 		FIXED_64_ASSERT(b.raw_value() != 0);
 		return fixed64<F>::from_raw(a.raw_value() % b.raw_value());
@@ -632,7 +641,7 @@ namespace f64
 
 
 	template<unsigned int F>
-	constexpr inline fixed64<F> sqrt(fixed64<F> v)
+	constexpr FIXED_64_FORCEINLINE fixed64<F> sqrt(fixed64<F> v)
 	{
 		/*
 			from https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Binary_numeral_system_.28base_2.29
@@ -647,17 +656,14 @@ namespace f64
 		uint64_t x = n;
 		uint64_t c = 0;
 
-		uint64_t d = uint64_t(1) << 62;
-		while (d > n)
-		{
-			d >>= 2;
-		}
+		uint64_t d = uint64_t(1) << ((64 - Fixed::clz(n) - 1) & ~(1));
 
 		while (d != 0)
 		{
-			if (x >= c + d)
+			auto a = c + d;
+			if (x >= a)
 			{
-				x -= c + d;
+				x -= a;
 				c = (c >> 1) + d;
 			}
 			else
@@ -671,7 +677,7 @@ namespace f64
 	}
 
 	template <unsigned int F>
-	constexpr inline fixed64<F> copysign(fixed64<F> x, fixed64<F> y) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> copysign(fixed64<F> x, fixed64<F> y) noexcept
 	{
 		x = abs(x);
 		return (y >= fixed64<F>{0}) ? x : -x;
@@ -680,7 +686,7 @@ namespace f64
 
 #if FIXED_64_ENABLE_TRIG_LUT
 	template <unsigned int F>
-	constexpr inline fixed64<F> sin(fixed64<F> x) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> sin(fixed64<F> x) noexcept
 	{
 		using Fixed = fixed64<F>;
 		x = fmod(x, Fixed::two_pi());
@@ -747,7 +753,7 @@ namespace f64
 #endif
 
 	template <unsigned int F>
-	constexpr inline fixed64<F> cos(fixed64<F> x) noexcept
+	constexpr FIXED_64_FORCEINLINE fixed64<F> cos(fixed64<F> x) noexcept
 	{
 		using Fixed = fixed64<F>;
 		if (x > Fixed(0)) {
@@ -891,7 +897,7 @@ namespace std
 		using fixed = f64::fixed64<F>;
 		static constexpr fixed lowest() noexcept
 		{
-			return fixed::from_raw(std::numeric_limits<fixed::fixed_raw>::lowest());
+			return fixed::from_raw(std::numeric_limits<typename fixed::fixed_raw>::lowest());
 		};
 
 		static constexpr fixed min() noexcept
@@ -901,7 +907,7 @@ namespace std
 
 		static constexpr fixed max() noexcept
 		{
-			return fixed::from_raw(std::numeric_limits<fixed::fixed_raw>::max());
+			return fixed::from_raw(std::numeric_limits<typename fixed::fixed_raw>::max());
 		};
 
 		static constexpr fixed epsilon() noexcept

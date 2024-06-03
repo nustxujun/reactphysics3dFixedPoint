@@ -46,7 +46,7 @@ class PolygonVertexArray {
     public:
 
         /// Data type for the vertices in the array
-        enum class VertexDataType {VERTEX_FLOAT_TYPE, VERTEX_DOUBLE_TYPE};
+        enum class VertexDataType {VERTEX_FLOAT_TYPE, VERTEX_DOUBLE_TYPE, VERTEX_FIXED_TYPE};
 
         /// Data type for the indices in the array
         enum class IndexDataType {INDEX_INTEGER_TYPE, INDEX_SHORT_TYPE};
