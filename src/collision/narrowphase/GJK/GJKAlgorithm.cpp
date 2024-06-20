@@ -105,7 +105,11 @@ void GJKAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInfoBatch, uin
         }
 
         // Initialize the upper bound for the square distance
+#ifdef RP3D_USE_FIXED
+        decimal distSquare = DECIMAL_LARGEST / 2;
+#else
         decimal distSquare = DECIMAL_LARGEST;
+#endif
 
         bool noIntersection = false;
 
