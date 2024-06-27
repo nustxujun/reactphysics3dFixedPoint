@@ -31,7 +31,6 @@
 #include <iostream>
 
 using namespace reactphysics3d;
-
 size_t HeapAllocator::INIT_ALLOCATED_SIZE = 5 * 1048576;    // 5 Mb
 
 // Constructor

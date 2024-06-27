@@ -194,15 +194,15 @@ void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convex
     assert(convexHull.getNbVertices() == outVertices.size() / 3);
     assert(convexHull.getNbFaces() == outFaces.size());
 
-    outPolygonVertexArray.init(outVertices.size() / 3, &(outVertices[0]), 3 * sizeof(float),
-                               &(outIndices[0]), sizeof(unsigned int),
-                               outFaces.size(), &(outFaces[0]),
+    outPolygonVertexArray.init(outVertices.size() / 3, &(outVertices[0]), 3 * sizeof(decimal),
+                                &(outIndices[0]), sizeof(unsigned int),
+                                outFaces.size(), &(outFaces[0]),
 #ifdef RP3D_USE_FIXED
-                               PolygonVertexArray::VertexDataType::VERTEX_FIXED_TYPE,
+								PolygonVertexArray::VertexDataType::VERTEX_FIXED_TYPE,
 #else
-                               PolygonVertexArray::VertexDataType::VERTEX_FLOAT_TYPE,
+                               	PolygonVertexArray::VertexDataType::VERTEX_FLOAT_TYPE,
 #endif
-                               PolygonVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
+                               	PolygonVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
 }
 
 // Add a vertex to the current convex hull to expand it
@@ -1075,7 +1075,8 @@ void QuickHull::extractPoints(const VertexArray& vertexArray, Array<Vector3>& ou
         }
     }
 #ifdef RP3D_USE_FIXED
-    else if (vertexArray.getDataType() == VertexArray::DataType::VERTEX_FIXED_TYPE) {
+    else if (vertexArray.getDataType() == VertexArray::DataType::VERTEX_FIXED_TYPE) 
+    {
         for (uint32 p = 0; p < vertexArray.getNbVertices(); p++) {
             const decimal* points = (decimal*)(pointsStartPointer + p * vertexArray.getStride());
             outArray.add(Vector3(points[0], points[1], points[2]));

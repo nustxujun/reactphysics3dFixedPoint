@@ -30,7 +30,6 @@
 #include <reactphysics3d/containers/containers_common.h>
 
 using namespace reactphysics3d;
-
 // Initialize the structure (when all vertices and faces have been added)
 void HalfEdgeStructure::computeHalfEdges() {
 

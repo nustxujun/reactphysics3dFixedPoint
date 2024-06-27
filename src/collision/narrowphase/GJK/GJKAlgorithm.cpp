@@ -110,7 +110,6 @@ void GJKAlgorithm::testCollision(NarrowPhaseInfoBatch& narrowPhaseInfoBatch, uin
 #else
         decimal distSquare = DECIMAL_LARGEST;
 #endif
-
         bool noIntersection = false;
 
         do {
